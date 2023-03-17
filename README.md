@@ -3,10 +3,10 @@
 
 Description
 
-This app provides recommendations to users related to Healthy diet and physical Fitness based on their goal.
+This app provides variety of recommendations to users related to a healthy diet and physical Fitness based on their goal.
 The app lets users choose a category (such as Weight Loss, Fitness, Cardiac Health) and display the relevant feature
 that describes the details about exercises and diet routines that match that specific category (the goal).
-Some users (authors) are entitled to managing the features (Exercises and Diet)
+Some users (authors) are entitled to managing the features (Exercises and Diet).
 
 
 
