@@ -9,19 +9,17 @@ class ScheduleRepository {
 
   Future<List<Schedule>> fetchAll() async {
     try {
-      print('bello');
       final schedules = await _remoteDataProvider.fetchAll();
-      print('bellooo');
       // await _syncLocalDatabase(schedules);
       return schedules;
     } catch (e) {
       // return _localDataProvider.getSchedules();
       return [
         Schedule(
-            id: '*_*',
-            driverId: '*_*',
-            managerId: '*_*',
-            vehicleId: '*_*',
+            id: "couldn't fetch schedules.",
+            driverId: "couldn't fetch Driver.",
+            managerId: "Couldn't fetch manager",
+            vehicleId: "Couldn't fetch Vehicle",
             start: DateTime.now(),
             end: DateTime.now())
       ];

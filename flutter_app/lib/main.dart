@@ -1,69 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'schedule/screens/schedules.dart';
+
 import 'schedule/bloc_observer.dart';
-import 'schedule/blocs/blocs.dart';
-import 'schedule/data_providers/schedule_remote_provider.dart';
-import 'schedule/repository/schedule_repository.dart';
-// import 'schedule/screens/schedule_route.dart';
 
-// void main() {
-//   final ScheduleRepository scheduleRepository = ScheduleRepository();
-//   // Bloc.transformer = customEventTransformer();
-//   // Bloc.observer = AppBlocObserver();
-//   runApp(MyApp(scheduleRepository: scheduleRepository));
-//   // runApp(MyApp());
-// }
+import 'auth/blocs/blocs.dart';
 
-// class MyApp extends StatelessWidget {
-//   final ScheduleRepository scheduleRepository;
-//   const MyApp({Key? key, required this.scheduleRepository}) : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Calendar Demo',
-//       home: MyHomePage(),
-//     );
-//   }
-// }
+import './auth/repository/user_repository.dart';
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-
-// import 'course/bloc_observer.dart';
-// import 'course/blocs/blocs.dart';
-// import 'course/data_providers/course_data_provider.dart';
-// import 'course/repository/course_repository.dart';
-// import 'course/screens/course_route.dart';
+import './auth/screens/LoginPage.dart';
+import 'routes.dart';
 
 void main() {
-  final ScheduleRepository scheduleRepository = ScheduleRepository();
+  final UserRepository userRepository = UserRepository();
 
-  Bloc.observer = AppBlocObserver();
-  runApp(ScheduleApp(scheduleRepository: scheduleRepository));
-  // runApp(MyApp());
+  // Bloc.observer = AppBlocObserver();
+  runApp(MyApp(userRepository: userRepository));
 }
 
-class ScheduleApp extends StatelessWidget {
-  final ScheduleRepository scheduleRepository;
+class MyApp extends StatelessWidget {
+  final UserRepository userRepository;
 
-  const ScheduleApp({Key? key, required this.scheduleRepository})
-      : super(key: key);
+  MyApp({
+    Key? key,
+    required this.userRepository,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: scheduleRepository,
-      child: BlocProvider(
-        create: (context) =>
-            ScheduleBloc(scheduleRepository: scheduleRepository)
-              ..add(const ScheduleLoad()),
-        child: MaterialApp(
+    final tokenObj = userRepository.getToken().then((value) => print(value));
+    userRepository.getUser();
+
+    return BlocProvider(
+        create: (BuildContext context) =>
+            UserBloc(userRepository: userRepository),
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: goRouter,
           title: 'VehMan',
-          home: SchedulesList(),
-        ),
-      ),
-    );
+        ));
   }
 }

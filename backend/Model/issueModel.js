@@ -27,6 +27,10 @@ const issueSchema = new Schema({
     status: {
         type: String,
         default: "pending"
+    },
+    response: {
+        type: String,
+        default: ""
     }
     
 }, {timestamps: true})

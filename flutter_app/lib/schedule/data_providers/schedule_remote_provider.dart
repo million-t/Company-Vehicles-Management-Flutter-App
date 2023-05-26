@@ -1,13 +1,18 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/schedule.dart';
+import '../../auth/repository/user_repository.dart';
 
 class ScheduleRemoteDataProvider {
-  static const String _baseUrl =
-      'http://localhost:5500/api/schedule/driver/6469c2fb301b3912a6423d20';
+  static const String _baseUrl = 'http://localhost:5500/api/schedule/';
 
   Future<List<Schedule>> fetchAll() async {
-    final response = await http.get(Uri.parse(_baseUrl));
+    const String auth =
+        "token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDZiYzZmOTVmNGQxYzhkYmI4MGFhZjQiLCJpYXQiOjE2ODQ3ODQ4OTAsImV4cCI6MTY4NTM4OTY5MH0.ka9huuxKjjw_FggETbv28q-li4SIR7HE3j5JoT5o2Zk";
+    final response =
+        await http.get(Uri.parse(_baseUrl), headers: <String, String>{
+      'Authorization': auth,
+    });
     // print('yoohooo');
     // print(response.body);
     final data = jsonDecode(response.body) as List<dynamic>;
