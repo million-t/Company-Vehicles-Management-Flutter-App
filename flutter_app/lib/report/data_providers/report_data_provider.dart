@@ -64,7 +64,7 @@ class ReportDataProvider {
   }
 
   Future<Report> update(String id, Report report, String token) async {
-    final response = await http.put(Uri.parse("$_baseUrl/$id"),
+    final response = await http.patch(Uri.parse("$_baseUrl/$id"),
         headers: <String, String>{
           "Content-Type": "application/json",
           "Authorization": token

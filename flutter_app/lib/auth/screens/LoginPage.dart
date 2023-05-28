@@ -48,10 +48,10 @@ class _LoginPageState extends State<LoginPage> {
           );
         },
         child: Scaffold(
-          appBar: AppBar(
-            title: Text('Welcome'),
-            backgroundColor: Color.fromARGB(255, 223, 25, 25),
-          ),
+          // appBar: AppBar(
+          //   // title: Text('Welcome'),
+          //   backgroundColor: Color.fromARGB(255, 223, 25, 25),
+          // ),
           body: Padding(
             padding: EdgeInsets.all(16.0),
             child: SingleChildScrollView(
@@ -146,7 +146,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextButton(
                     onPressed: () {
-                      // TODO: Navigate to the signup page
                       setState(() {
                         _isLogin = !_isLogin;
                       });

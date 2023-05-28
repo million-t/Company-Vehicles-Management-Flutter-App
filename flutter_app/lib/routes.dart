@@ -6,6 +6,8 @@ import './auth/screens/LoginPage.dart';
 import './auth/repository/user_repository.dart';
 import './settings/driverSettings.dart';
 import './report/screens/createUpdateReport.dart';
+import './vehicle/screens/vehiclesCreate.dart';
+import './vehicle/screens/vehicles.dart';
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -13,7 +15,7 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 // the one and only GoRouter instance
 final goRouter = GoRouter(
-  initialLocation: '/schedule',
+  initialLocation: '/',
   navigatorKey: _rootNavigatorKey,
   routes: [
     GoRoute(
@@ -59,7 +61,7 @@ final goRouter = GoRouter(
           ],
         ),
         GoRoute(
-          path: '/issues',
+          path: '/',
           name: 'issues',
           pageBuilder: (context, state) => NoTransitionPage(
             child: SchedulesList(),
@@ -79,12 +81,20 @@ final goRouter = GoRouter(
             child: Settings(),
             // const RootScreen(label: 'A', detailsPath: '/schedule/create'),
           ),
-          // routes: [
-          //   GoRoute(
-          //     path: 'report',
-          //     builder: (context, state) => const DetailsScreen(label: 'A'),
-          //   ),
-          // ],
+          routes: [
+            GoRoute(
+              path: 'vehicles',
+              name: 'vehicles',
+              builder: (context, state) => VehicleScreen(),
+            ),
+            GoRoute(
+              path: 'createVehicle',
+              name: 'createVehicle',
+              pageBuilder: (context, state) => NoTransitionPage(
+                child: VehicleCreateUpdate(),
+              ),
+            ),
+          ],
         )
       ],
     ),
@@ -102,12 +112,12 @@ const tabs = [
     label: 'Report',
   ),
   ScaffoldWithNavBarTabItem(
-    initialLocation: '/issues',
+    initialLocation: '/',
     icon: Icon(Icons.settings),
     label: 'issues',
   ),
   ScaffoldWithNavBarTabItem(
-    initialLocation: '/Settings',
+    initialLocation: '/settings',
     icon: Icon(Icons.settings),
     label: 'Settings',
   )

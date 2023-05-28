@@ -14,18 +14,12 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
 
   ReportBloc({required this.reportRepository}) : super(ReportLoading()) {
     on<ReportLoad>((event, emit) async {
-      // emit(ReportLoading());
-      // print(">>>>>>>>>>>>>>>>>>>>> 0");
       try {
-        // print(">>>>>>>>>>>>>>>>>>>>> 1");
         String? token = await userRepository.getToken();
         // token = token.toString();
         final user = await userRepository.getUser();
         final userJson = jsonDecode(user);
         final type = userJson['type'];
-        // print(">>>>>>>>>>>>>>>>>>>>> " + type);
-        print(userJson['email']);
-        // print(token);
 
         final List<Report> reports;
         if (type == "manager") {
@@ -61,7 +55,7 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
         } else {
           throw Exception("Unauthenticated.");
         }
-        print('Safe??');
+
         emit(ReportOperationSuccess(reports));
       } catch (error) {
         emit(ReportOperationFailure(error));

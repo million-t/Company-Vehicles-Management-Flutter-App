@@ -1,3 +1,3 @@
-export 'course_bloc.dart';
-export 'course_event.dart';
-export 'course_state.dart';
+export 'vehicle_bloc.dart';
+export 'vehicle_event.dart';
+export 'vehicle_state.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Settings extends StatelessWidget {
   @override
@@ -25,6 +26,9 @@ class Settings extends StatelessWidget {
             color: Colors.grey[300],
             child: ListTile(
               title: Text('Vehicles'),
+              onTap: () {
+                context.go('/settings/vehicles');
+              },
             ),
           ),
           Card(

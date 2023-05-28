@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/blocs.dart';
 import '../repository/report_repository.dart';
 import 'package:go_router/go_router.dart';
+import 'deleteReportDialog.dart';
 
 class ReportScreen extends StatefulWidget {
   @override
@@ -15,9 +16,7 @@ class _ReportScreenState extends State<ReportScreen> {
   @override
   Widget build(BuildContext context) {
     ReportDialog dialog = ReportDialog();
-    // helper = DbHelper();
-    // showData(this.shoppingList.id);
-    List reports = [];
+    ReportDeleteDialog deleteDialog = ReportDeleteDialog();
     ReportRepository reportRepository = ReportRepository();
     return BlocProvider(
         create: (context) {
@@ -67,41 +66,59 @@ class _ReportScreenState extends State<ReportScreen> {
                                     6.0), // set the border radius
                               ),
                               child: ListTile(
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 16.0),
-                                title: Text(
-                                  reports[index].vehicleName,
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 255, 255,
-                                        255), // set the font color
-                                    fontSize: 14.0, // set the font size
-                                    // fontWeight:
-                                    //     FontWeight.bold, // set the font weight
-                                  ),
-                                ),
-                                subtitle: Text(
-                                    '\n\nVolume: ${reports[index].litres} \nLitres \nDistance: ${reports[index].distance}',
+                                  contentPadding:
+                                      EdgeInsets.symmetric(vertical: 16.0),
+                                  title: Text(
+                                    reports[index].vehicleName,
                                     style: const TextStyle(
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                    )),
-                                onTap: () {},
-                                trailing: IconButton(
-                                  icon: Icon(
-                                    Icons.edit,
-                                    color: Colors.white,
+                                      color: Color.fromARGB(255, 255, 255,
+                                          255), // set the font color
+                                      fontSize: 14.0, // set the font size
+                                      // fontWeight:
+                                      //     FontWeight.bold, // set the font weight
+                                    ),
                                   ),
-                                  onPressed: () {
-                                    showDialog(
-                                        context: _,
-                                        builder: (BuildContext _) =>
-                                            dialog.buildAlert(
-                                                _,
-                                                reportRepository,
-                                                reports[index],
-                                                false));
-                                  },
-                                ),
-                              ),
+                                  subtitle: Text(
+                                      '\n\nVolume: ${reports[index].litres} \nLitres: ${reports[index].litres} \nDistance: ${reports[index].distance}',
+                                      style: const TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255),
+                                      )),
+                                  onTap: () {},
+                                  trailing: PopupMenuButton(
+                                    color: Colors.white,
+                                    surfaceTintColor: Color(0xff393E46),
+                                    onSelected: (value) {
+                                      if (value == 'update') {
+                                        showDialog(
+                                            context: _,
+                                            builder: (BuildContext _) =>
+                                                dialog.buildAlert(
+                                                    _,
+                                                    reportRepository,
+                                                    reports[index],
+                                                    false));
+                                      } else if (value == 'delete') {
+                                        showDialog(
+                                            context: _,
+                                            builder: (BuildContext _) =>
+                                                deleteDialog.buildDeleteAlert(
+                                                    _,
+                                                    reportRepository,
+                                                    reports[index]));
+                                      }
+                                    },
+                                    itemBuilder: (context) => [
+                                      PopupMenuItem(
+                                        value: 'update',
+                                        child: Text('Edit'),
+                                      ),
+                                      PopupMenuItem(
+                                        value: 'delete',
+                                        child: Text('Delete'),
+                                      ),
+                                    ],
+                                  )),
                             )),
                       );
                     });

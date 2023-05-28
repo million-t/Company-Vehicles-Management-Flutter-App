@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'schedule/bloc_observer.dart';
-
 import 'auth/blocs/blocs.dart';
-
 import './auth/repository/user_repository.dart';
-
 import './auth/screens/LoginPage.dart';
 import 'routes.dart';
 
@@ -36,7 +32,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           routerConfig: goRouter,
-          title: 'VehMan',
+          title: 'VeValet',
         ));
   }
 }

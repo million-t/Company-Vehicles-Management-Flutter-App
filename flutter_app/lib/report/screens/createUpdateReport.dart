@@ -26,7 +26,7 @@ class _ReportCreateUpdateState extends State<ReportCreateUpdate> {
 
   @override
   Widget build(BuildContext context) {
-    List reports = [];
+    // List reports = [];
     ReportRepository reportRepository = ReportRepository();
     return BlocProvider(
         create: (context) {
@@ -37,7 +37,7 @@ class _ReportCreateUpdateState extends State<ReportCreateUpdate> {
         child: Scaffold(
             backgroundColor: Color(0xff222831),
             appBar: AppBar(
-              title: Text(isNew ? "Create" : "Update"),
+              title: const Text("Create Report"),
               backgroundColor: const Color(0xff393E46),
             ),
             body: BlocBuilder<ReportBloc, ReportState>(builder: (_, state) {
@@ -50,33 +50,33 @@ class _ReportCreateUpdateState extends State<ReportCreateUpdate> {
                           controller: txtVehicleName,
                           style: const TextStyle(color: Colors.white),
                           decoration: const InputDecoration(
-                              hintStyle: TextStyle(
+                              labelText: 'Vehicle Name',
+                              labelStyle: TextStyle(
                                   color: Color.fromRGBO(255, 255, 255, 0.509)),
-                              hintText: 'Vehicle Name',
                               focusColor: Colors.amber)),
                       TextField(
                         style: const TextStyle(color: Colors.white),
                         controller: txtLitres,
                         decoration: const InputDecoration(
-                            hintStyle: TextStyle(
+                            labelStyle: TextStyle(
                                 color: Color.fromRGBO(255, 255, 255, 0.509)),
-                            hintText: 'Litres'),
+                            labelText: 'Litres'),
                       ),
                       TextField(
                         style: const TextStyle(color: Colors.white),
                         controller: txtPrice,
                         decoration: const InputDecoration(
-                            hintStyle: TextStyle(
+                            labelStyle: TextStyle(
                                 color: Color.fromRGBO(255, 255, 255, 0.509)),
-                            hintText: 'Price'),
+                            labelText: 'Price'),
                       ),
                       TextField(
                         style: const TextStyle(color: Colors.white),
                         controller: txtDistance,
                         decoration: const InputDecoration(
-                            hintStyle: TextStyle(
+                            labelStyle: TextStyle(
                                 color: Color.fromRGBO(255, 255, 255, 0.509)),
-                            hintText: 'Distance'),
+                            labelText: 'Distance'),
                       ),
                       Padding(
                           padding:
