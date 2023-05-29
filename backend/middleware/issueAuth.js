@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const User = require('../Model/userModel')
 
-const vehicleAuth = async (req, res, next) => {
+const issueAuth = async (req, res, next) => {
   
   const { authorization } = req.headers
 
@@ -24,7 +24,7 @@ const vehicleAuth = async (req, res, next) => {
     //     res.status(401).json({ error: 'Request is not authorized' })
     // }
     // else{
-    req.user = user 
+    req.user = user
     next()
     // }
 
@@ -34,4 +34,4 @@ const vehicleAuth = async (req, res, next) => {
   }
 }
 
-module.exports = vehicleAuth
+module.exports = issueAuth

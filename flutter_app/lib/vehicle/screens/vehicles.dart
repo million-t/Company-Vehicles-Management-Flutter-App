@@ -148,7 +148,7 @@ class _VehicleScreenState extends State<VehicleScreen> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              context.go('/settings/createVehicle');
+              context.go('/settings/vehicles/createVehicle');
             },
             child: Icon(Icons.add, color: Color(0xff222831)),
             backgroundColor: Color.fromARGB(255, 255, 211, 109),

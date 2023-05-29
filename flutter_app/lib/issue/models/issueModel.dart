@@ -1,35 +1,31 @@
 class Issue {
-  final String id;
-  final String driverId;
-  final String managerId;
-  final String driverName;
+  String id;
+  String driverId;
+  String managerId;
+  String driverName;
   final String content;
-  final String status;
+  String status;
+  String response;
 
   Issue({
-    required this.id,
-    required this.driverId,
-    required this.managerId,
-    required this.driverName,
+    this.id = '',
+    this.driverId = '',
+    this.managerId = '',
+    this.driverName = '',
     required this.content,
-    required this.status,
+    this.response = '',
+    this.status = "pending",
   });
 
-  // factory Response.fromJson(Map<String, dynamic> json) {
-  //   return Response(
-  //     id: json['id'],
-  //     name: json['name'],
-  //     description: json['description'],
-  //   );
-  // }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'driver_id': driverId,
-      'manager_id': managerId,
-      'driver_name': driverName,
-      'content': content,
-      'status': status
-    };
+  factory Issue.fromJson(Map<String, dynamic> json) {
+    return Issue(
+      id: json['_id'],
+      driverId: json['driver_id'],
+      driverName: json['driver_name'],
+      managerId: json['manager_id'],
+      response: json['response'],
+      content: json['content'],
+      status: json['status'],
+    );
   }
 }

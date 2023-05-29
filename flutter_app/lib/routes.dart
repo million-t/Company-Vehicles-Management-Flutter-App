@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import './report/screens/driverReport.dart';
 import './auth/screens/LoginPage.dart';
+import './auth/screens/profilePage.dart';
 import './auth/repository/user_repository.dart';
 import './settings/driverSettings.dart';
 import './report/screens/createUpdateReport.dart';
 import './vehicle/screens/vehiclesCreate.dart';
 import './vehicle/screens/vehicles.dart';
+import './issue/screens/issue.dart';
+import './auth/screens/landing.dart';
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -20,6 +23,14 @@ final goRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
+      name: 'landing',
+      pageBuilder: (context, state) => NoTransitionPage(
+        child: WelcomePage(),
+        // const RootScreen(label: 'A', detailsPath: '/schedule/create'),
+      ),
+    ),
+    GoRoute(
+      path: '/login',
       name: 'login',
       pageBuilder: (context, state) => NoTransitionPage(
         child: LoginPage(userRepository: UserRepository()),
@@ -61,10 +72,10 @@ final goRouter = GoRouter(
           ],
         ),
         GoRoute(
-          path: '/',
+          path: '/issues',
           name: 'issues',
           pageBuilder: (context, state) => NoTransitionPage(
-            child: SchedulesList(),
+            child: IssueScreen(),
             // const RootScreen(label: 'A', detailsPath: '/schedule/create'),
           ),
           // routes: [
@@ -86,13 +97,18 @@ final goRouter = GoRouter(
               path: 'vehicles',
               name: 'vehicles',
               builder: (context, state) => VehicleScreen(),
+              routes: [
+                GoRoute(
+                  path: 'createVehicle',
+                  name: 'createVehicle',
+                  builder: (context, state) => VehicleCreateUpdate(),
+                ),
+              ],
             ),
             GoRoute(
-              path: 'createVehicle',
-              name: 'createVehicle',
-              pageBuilder: (context, state) => NoTransitionPage(
-                child: VehicleCreateUpdate(),
-              ),
+              path: 'profile',
+              name: 'profile',
+              builder: (context, state) => ProfilePage(),
             ),
           ],
         )
@@ -112,7 +128,7 @@ const tabs = [
     label: 'Report',
   ),
   ScaffoldWithNavBarTabItem(
-    initialLocation: '/',
+    initialLocation: '/issues',
     icon: Icon(Icons.settings),
     label: 'issues',
   ),

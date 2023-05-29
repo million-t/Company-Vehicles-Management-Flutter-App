@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/schedule.dart';
 import '../../auth/repository/user_repository.dart';
+import '../../util/serverIp.dart';
 
 class ScheduleRemoteDataProvider {
-  static const String _baseUrl = 'http://localhost:5500/api/schedule/';
+  static final String _baseUrl = "${Server().ip}/schedule";
 
   Future<List<Schedule>> fetchAll() async {
     const String auth =

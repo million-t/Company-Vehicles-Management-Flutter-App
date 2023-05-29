@@ -40,19 +40,10 @@ class Settings extends StatelessWidget {
           Card(
             color: Colors.grey[300],
             child: ListTile(
-              title: Text('Edit profile'),
-            ),
-          ),
-          Card(
-            color: Colors.grey[300],
-            child: ListTile(
-              title: Text('Theme'),
-            ),
-          ),
-          Card(
-            color: Colors.grey[300],
-            child: ListTile(
-              title: Text('About Us'),
+              title: Text('Profile'),
+              onTap: () {
+                context.go('/settings/profile');
+              },
             ),
           ),
         ],

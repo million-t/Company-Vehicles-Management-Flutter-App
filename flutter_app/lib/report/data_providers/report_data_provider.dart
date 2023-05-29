@@ -1,11 +1,11 @@
 import 'dart:convert';
-
+import '../../util/serverIp.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/report_model.dart';
 
 class ReportDataProvider {
-  static const String _baseUrl = "http://localhost:5500/api/report";
+  static final String _baseUrl = "${Server().ip}/report";
 
   Future<Report> create(Report report, String token) async {
     final http.Response response = await http.post(Uri.parse(_baseUrl),

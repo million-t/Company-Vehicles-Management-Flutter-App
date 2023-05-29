@@ -1,23 +1,27 @@
-// import '../data_providers/course_data_provider.dart';
-// import '../models/course.dart';
+import '../data_providers/issue_data_provider.dart';
+import '../models/issueModel.dart';
 
-// class CourseRepository {
-//   final CourseDataProvider dataProvider;
-//   CourseRepository(this.dataProvider);
+class IssueRepository {
+  final IssueDataProvider dataProvider = IssueDataProvider();
+  IssueRepository();
 
-//   Future<Course> create(Course course) async {
-//     return dataProvider.create(course);
-//   }
+  Future<Issue> create(Issue issue, String token) async {
+    return dataProvider.create(issue, token);
+  }
 
-//   Future<Course> update(int id, Course course) async {
-//     return dataProvider.update(id, course);
-//   }
+  Future<Issue> update(String id, Issue issue, String token) async {
+    return dataProvider.update(id, issue, token);
+  }
 
-//   Future<List<Course>> fetchAll() async {
-//     return dataProvider.fetchAll();
-//   }
+  Future<List<Issue>> getAllToManager(String token) async {
+    return dataProvider.getAllToManager(token);
+  }
 
-//   Future<void> delete(int id) async {
-//     dataProvider.delete(id);
-//   }
-// }
+  Future<List<Issue>> getAllByDriver(String token) async {
+    return dataProvider.getAllByDriver(token);
+  }
+
+  Future<void> delete(String id, String token) async {
+    dataProvider.delete(id, token);
+  }
+}

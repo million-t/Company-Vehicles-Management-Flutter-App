@@ -39,15 +39,13 @@ class VehicleBloc extends Bloc<VehicleEvent, VehicleState> {
         final token = await userRepository.getToken();
         final user = await userRepository.getUser();
         final userJson = jsonDecode(user);
-        final type = userJson['type'];
+
         event.vehicle.managerId = userJson['_id'];
 
         await vehicleRepository.create(event.vehicle, token!);
         emit(VehicleLoading());
         final List<Vehicle> vehicles =
             await vehicleRepository.getAllByManager(token.toString());
-
-        print("created");
 
         emit(VehicleOperationSuccess(vehicles));
       } catch (error) {
@@ -60,7 +58,6 @@ class VehicleBloc extends Bloc<VehicleEvent, VehicleState> {
         final token = await userRepository.getToken();
         final user = await userRepository.getUser();
         final userJson = jsonDecode(user);
-        final type = userJson['type'];
         event.vehicle.managerId = userJson['_id'];
         await vehicleRepository.update(
             event.id, event.vehicle, token.toString());

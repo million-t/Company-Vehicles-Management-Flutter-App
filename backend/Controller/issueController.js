@@ -142,6 +142,7 @@ const getAllIssueToManager = async (req, res) => {
     const { _id } = req.user
       try {
           const issue = await Issue.find({ manager_id: _id }).sort({createdAt: 1})
+        //   console.log(issue)
       
           res.status(200).json(issue)
       }
