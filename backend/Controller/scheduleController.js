@@ -6,10 +6,12 @@ const mongoose = require("mongoose");
 const createSchedule = async (req, res) => {
   const {
     driver_id,
-    driver_name,
+    // driver_name,
     manager_id,
-    manager_name,
     vehicle_id,
+    image,
+    license_plate_number,
+    
     start,
     end,
     
@@ -18,12 +20,14 @@ const createSchedule = async (req, res) => {
   try {
     const schedule = await Schedule.create({
       driver_id,
-      driver_name,
-      manager_id,
-      manager_name,
-      vehicle_id,
-      start,
-      end,
+      // driver_name,
+    manager_id,
+    vehicle_id,
+    image,
+    license_plate_number,
+    
+    start,
+    end,
     });
 
     res.status(200).json(schedule);
@@ -96,8 +100,9 @@ const getSchedule = async (req, res) => {
 
 
 const getAllSchedulesOfDriver = async (req, res) => {
+  const { id } = req.user;
   try {
-    const schedules = await Schedule.find({}).sort({ createdAt: -1 });
+    const schedules = await Schedule.find({driver_id: id}).sort({ createdAt: -1 });
 
     res.status(200).json(schedules);
   } catch (error) {
@@ -107,7 +112,7 @@ const getAllSchedulesOfDriver = async (req, res) => {
 //==============================================================================================================
 
 const getAllSchedulesByManager = async (req, res) => {
-  const id = req.params["id"];
+  const { id } = req.user;
   try {
     const schedules = await Schedule.find({ manager_id: id }).sort({
       createdAt: -1,

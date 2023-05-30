@@ -140,7 +140,17 @@ class _LoginPageState extends State<LoginPage> {
 
                       BlocProvider.of<UserBloc>(context).add(event);
 
-                      context.go('/schedule');
+                      userRepository.getToken().then((value) {
+                        value = value.toString();
+                        if (value == 'null') {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(_isLogin
+                                  ? "Login Failed."
+                                  : "Signup Failed.")));
+                        } else {
+                          context.go('/schedule');
+                        }
+                      });
                     },
                     child: Text(buttonText),
                   ),

@@ -1,63 +1,27 @@
-import '../data_providers/schedule_local_provider.dart';
-import '../data_providers/schedule_remote_provider.dart';
-import '../models/schedule.dart';
-import 'package:sqflite/sqflite.dart';
+import '../data_providers/schedule_data_provider.dart';
+import '../models/schedule_model.dart';
 
 class ScheduleRepository {
-  final _remoteDataProvider = ScheduleRemoteDataProvider();
-  // final _localDataProvider = ScheduleLocalDataProvider();
+  final ScheduleDataProvider dataProvider = ScheduleDataProvider();
+  ScheduleRepository();
 
-  Future<List<Schedule>> fetchAll() async {
-    try {
-      final schedules = await _remoteDataProvider.fetchAll();
-      // await _syncLocalDatabase(schedules);
-      return schedules;
-    } catch (e) {
-      // return _localDataProvider.getSchedules();
-      return [
-        Schedule(
-            id: "couldn't fetch schedules.",
-            driverId: "couldn't fetch Driver.",
-            managerId: "Couldn't fetch manager",
-            vehicleId: "Couldn't fetch Vehicle",
-            start: DateTime.now(),
-            end: DateTime.now())
-      ];
-    }
+  Future<Schedule> create(Schedule schedule, String token) async {
+    return dataProvider.create(schedule, token);
   }
 
-  // Future<void> _syncLocalDatabase(List<Schedule> schedules) async {
-  //   final db = await _localDataProvider.getDb();
-  //   await db.transaction((txn) async {
-  //     await txn.delete(_localDataProvider.tableName);
-  //     for (final schedule in schedules) {
-  //       await txn.insert(_localDataProvider.tableName, schedule.toJson());
-  //     }
-  //   });
-  // }
+  Future<Schedule> update(String id, Schedule schedule, String token) async {
+    return dataProvider.update(id, schedule, token);
+  }
+
+  Future<List<Schedule>> getAllToManager(String token) async {
+    return dataProvider.getAllToManager(token);
+  }
+
+  Future<List<Schedule>> getAllByDriver(String token) async {
+    return dataProvider.getAllByDriver(token);
+  }
+
+  Future<void> delete(String id, String token) async {
+    await dataProvider.delete(id, token);
+  }
 }
-
-
-// import '../data_providers/schedule_remote_provider.dart';
-// import '../models/schedule.dart';
-
-// class ScheduleRepository {
-//   final ScheduleRemoteProvider dataProvider;
-//   ScheduleRepository(this.dataProvider);
-
-//   // Future<Schedule> create(Schedule course) async {
-//   //   return dataProvider.create(course);
-//   // }
-
-//   // Future<Schedule> update(int id, Schedule schedule) async {
-//   //   return dataProvider.update(id, schedule);
-//   // }
-
-//   Future<List<Schedule>> fetchAll() async {
-//     return dataProvider.fetchAll();
-//   }
-
-//   // Future<void> delete(int id) async {
-//   //   dataProvider.delete(id);
-//   // }
-// }

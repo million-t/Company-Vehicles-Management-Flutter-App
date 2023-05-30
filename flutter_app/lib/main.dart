@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tokenObj = userRepository.getToken().then((value) => print(value));
-    userRepository.getUser();
+    // final tokenObj = userRepository.getToken().then((value) => print(value));
+    // userRepository.getUser();
 
     return BlocProvider(
         create: (BuildContext context) =>

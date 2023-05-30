@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../models/schedule.dart';
+import '../models/schedule_model.dart';
 
 abstract class ScheduleState extends Equatable {
   const ScheduleState();

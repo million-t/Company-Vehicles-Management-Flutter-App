@@ -10,7 +10,7 @@ class UserDataProvider {
   void logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
-    print('removed');
+
     // await prefs.remove(key: 'type');
     // await prefs.remove(key: 'user');
   }
@@ -73,11 +73,17 @@ class UserDataProvider {
     }
   }
 
-  Future<List<User>> fetchAll() async {
-    final response = await http.get(Uri.parse(_baseUrl));
+  Future<List<User>> fetchAll(String token) async {
+    final response = await http.get(
+      Uri.parse("$_baseUrl/drivers"),
+      headers: <String, String>{
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+    );
     if (response.statusCode == 200) {
-      final courses = jsonDecode(response.body) as List;
-      return courses.map((c) => User.fromJson(c)).toList();
+      final drivers = jsonDecode(response.body) as List;
+      return drivers.map((c) => User.fromJson(c)).toList();
     } else {
       throw Exception("Could not fetch courses");
     }
@@ -88,10 +94,6 @@ class UserDataProvider {
         headers: <String, String>{"Content-Type": "application/json"},
         body: jsonEncode({
           "_id": id,
-          // "code": course.code,
-          // "title": course.title,
-          // "ects": course.ects,
-          // "description": course.description
         }));
 
     if (response.statusCode == 200) {

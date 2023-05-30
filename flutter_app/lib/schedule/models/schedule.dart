@@ -1,29 +1,35 @@
 class Schedule {
-  final String id;
-  final String driverId;
-  final String managerId;
+  String id;
+  String driverId;
+  String driverName;
+  String managerId;
   final String vehicleId;
+  final String image;
+  final String licensePlateNumber;
 
-  final DateTime start;
-  final DateTime end;
+  var start;
+  var end;
 
   Schedule(
-      {required this.id,
-      required this.driverId,
-      required this.managerId,
+      {this.id = '',
+      this.driverId = '',
+      this.managerId = '',
+      this.driverName = '',
       required this.vehicleId,
+      required this.image,
+      required this.licensePlateNumber,
       required this.start,
       required this.end});
 
   factory Schedule.fromJson(Map<String, dynamic> json) {
     return Schedule(
         id: json['_id'],
-        driverId: json['driver_name'],
-        managerId: json['manager_name'],
+        driverId: json['driver_id'],
+        managerId: json['manager_id'],
         vehicleId: json['vehicle_id'],
-        start: DateTime.parse(json['start']),
-        end: DateTime.parse(json['end']));
+        licensePlateNumber: json['license_plate_number'],
+        image: json['image'],
+        start: json['start'],
+        end: json['end']);
   }
-
-  toJson() {}
 }

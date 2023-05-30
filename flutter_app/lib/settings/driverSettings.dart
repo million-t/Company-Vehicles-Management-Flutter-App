@@ -23,7 +23,7 @@ class Settings extends StatelessWidget {
       body: Column(
         children: [
           Card(
-            color: Colors.grey[300],
+            color: Color.fromARGB(255, 149, 149, 149),
             child: ListTile(
               title: Text('Vehicles'),
               onTap: () {
@@ -35,6 +35,9 @@ class Settings extends StatelessWidget {
             color: Colors.grey[300],
             child: ListTile(
               title: Text('Drivers'),
+              onTap: () {
+                context.go('/settings/drivers');
+              },
             ),
           ),
           Card(

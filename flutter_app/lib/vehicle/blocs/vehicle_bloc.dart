@@ -23,6 +23,7 @@ class VehicleBloc extends Bloc<VehicleEvent, VehicleState> {
 
         final List<Vehicle> vehicles;
         if (type == "manager") {
+          print('checkpoint 1');
           vehicles = await vehicleRepository.getAllByManager(token.toString());
         } else {
           throw Exception("Unauthenticated.");

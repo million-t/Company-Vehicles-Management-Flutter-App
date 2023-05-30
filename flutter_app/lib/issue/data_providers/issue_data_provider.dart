@@ -71,7 +71,6 @@ class IssueDataProvider {
           "response": issue.response,
           "content": issue.content,
         }));
-    print("haa");
 
     if (response.statusCode == 200) {
       return Issue.fromJson(jsonDecode(response.body));
@@ -87,5 +86,6 @@ class IssueDataProvider {
     if (response.statusCode != 200) {
       throw Exception("Field to delete the issue");
     }
+    return;
   }
 }

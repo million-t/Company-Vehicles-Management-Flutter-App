@@ -11,7 +11,7 @@ const scheduleSchema = new Schema({
     },
     driver_name: {
         type: String,
-        required: true,
+        default: "",
     },
 
     manager_id: {
@@ -20,12 +20,20 @@ const scheduleSchema = new Schema({
     },
     manager_name: {
         type: String,
-        required: true,
+        default: "",
     },
 
     vehicle_id: {
-        type: Schema.Types.ObjectId, 
-        required: true
+        type: String, 
+        default: "",
+    },
+    image: {
+        type: String, 
+        default: "",
+    },
+    license_plate_number: {
+        type: String, 
+        default: ""
     },
 
     start: {

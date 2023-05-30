@@ -42,9 +42,9 @@ class UserRepository {
   //   return dataProvider.update(id, report);
   // }
 
-  // Future<List<User>> getAllToManager(String token) async {
-  //   return dataProvider.getAllToManager(token);
-  // }
+  Future<List<User>> fetchAll(String token) async {
+    return dataProvider.fetchAll(token);
+  }
 
   // Future<List<User>> getAllByDriver(String token) async {
   //   return dataProvider.getAllByDriver(token);

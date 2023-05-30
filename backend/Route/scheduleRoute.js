@@ -19,9 +19,9 @@ router.use(scheduleAuth)
 //create a Schedule
 router.post('/', createSchedule)
 // get all Schedules by a manager
-router.get('/manager/:id', getAllSchedulesByManager)
+router.get('/manager', getAllSchedulesByManager)
 //get all Schedules of driver
-router.get('/driver/:id', getAllSchedulesOfDriver)
+router.get('/driver', getAllSchedulesOfDriver)
 //get a Schedule
 router.get('/:id', getSchedule)
 //delete a Schedule

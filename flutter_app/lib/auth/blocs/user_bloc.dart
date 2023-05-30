@@ -7,15 +7,16 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository userRepository;
 
   UserBloc({required this.userRepository}) : super(UserLoading()) {
-    // on<UserLoad>((event, emit) async {
-    //   emit(UserLoading());
-    //   try {
-    //     final courses = await userRepository.fetchAll();
-    //     emit(UserOperationSuccess(courses));
-    //   } catch (error) {
-    //     emit(UserOperationFailure(error));
-    //   }
-    // });
+    on<UserLoad>((event, emit) async {
+      emit(UserLoading());
+      final token = await userRepository.getToken();
+      try {
+        final drivers = await userRepository.fetchAll(token.toString());
+        emit(UserOperationSuccess(drivers));
+      } catch (error) {
+        emit(UserOperationFailure(error));
+      }
+    });
 
     on<UserSignup>((event, emit) async {
       try {

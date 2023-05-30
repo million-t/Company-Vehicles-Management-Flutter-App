@@ -92,5 +92,6 @@ class ReportDataProvider {
     if (response.statusCode != 204) {
       throw Exception("Field to delete the Reports");
     }
+    return;
   }
 }

@@ -1,3 +1,4 @@
+import './schedule/screens/schedules.dart';
 import './schedule/screens/driverSchedulePage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +12,7 @@ import './vehicle/screens/vehiclesCreate.dart';
 import './vehicle/screens/vehicles.dart';
 import './issue/screens/issue.dart';
 import './auth/screens/landing.dart';
+import './settings/driversPage.dart';
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -47,15 +49,15 @@ final goRouter = GoRouter(
           path: '/schedule',
           name: 'schedule',
           pageBuilder: (context, state) => NoTransitionPage(
-            child: SchedulesList(),
+            child: ScheduleScreen(),
             // const RootScreen(label: 'A', detailsPath: '/schedule/create'),
           ),
-          // routes: [
-          //   GoRoute(
-          //     path: 'report',
-          //     builder: (context, state) => const DetailsScreen(label: 'A'),
-          //   ),
-          // ],
+          routes: [
+            GoRoute(
+              path: 'create',
+              builder: (context, state) => SchedulesList(),
+            ),
+          ],
         ),
         GoRoute(
           path: '/report',
@@ -109,6 +111,11 @@ final goRouter = GoRouter(
               path: 'profile',
               name: 'profile',
               builder: (context, state) => ProfilePage(),
+            ),
+            GoRoute(
+              path: 'drivers',
+              name: 'drivers',
+              builder: (context, state) => DriversScreen(),
             ),
           ],
         )

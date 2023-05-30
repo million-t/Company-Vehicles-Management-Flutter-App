@@ -65,7 +65,6 @@ class VehicleDataProvider {
         }));
 
     if (response.statusCode == 200) {
-      print('yeeee haaa');
       return Vehicle.fromJson(jsonDecode(response.body));
     } else {
       throw Exception("Could not update the Vehicle");
@@ -78,5 +77,6 @@ class VehicleDataProvider {
     if (response.statusCode != 204) {
       throw Exception("Field to delete the Vehicle");
     }
+    return;
   }
 }

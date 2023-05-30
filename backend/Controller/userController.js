@@ -157,10 +157,45 @@ const deleteUser = async (req, res) => {
   res.status(200).json(user);
 };
 
+
+const getDrivers = async (req, res) => {
+  const { authorization } = req.headers;
+
+  if (!authorization) {
+    return res.status(401).json({ error: "Authorization token required" });
+  }
+
+  const token = authorization.split(" ")[1];
+  let id;
+  try {
+    const { _id } = jwt.verify(token, process.env.SECRET);
+    id = _id;
+  } catch (error) {
+    res.status(401).json({ error: "Unauthorized Request" });
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such user." });
+  }
+
+  const users = await User.find({ manager_id: id }).sort({createdAt: 1})
+
+  if (!users) {
+    return res.status(404).json({ error: "No such user." });
+  }
+
+  res.status(200).json(users);
+};
+
+
+
+
+
 module.exports = {
   signupUser,
   loginUser,
   getUser,
   updateUser,
   deleteUser,
+  getDrivers
 };
