@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:go_router/go_router.dart';
 import '../repository/schedule_repository.dart';
 import '../blocs/schedule_bloc.dart';
-import '../blocs/schedule_state.dart';
 import 'managerSchedule.dart';
 
 class SchedulesList extends StatelessWidget {
@@ -64,8 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         onDaySelected: (selectedDay, focusedDay) {
                           setState(() {
                             _selectedDay = selectedDay;
-                            _focusedDay =
-                                focusedDay; // update `_focusedDay` here as well
+                            _focusedDay = focusedDay; //
                           });
                         },
                         calendarFormat: _calendarFormat,
@@ -77,28 +72,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Center(
                         child: ManagerSchedule(),
-                        // child: BlocBuilder<ScheduleBloc, ScheduleState>(
-                        //   builder: (_, state) {
-                        //     if (state is ScheduleOperationFailure) {
-                        //       return const Text('Could not fetch schedule.');
-                        //     }
-
-                        //     if (state is ScheduleOperationSuccess) {
-                        //       final schedules = state.schedules;
-
-                        //       return ListView.builder(
-                        //         itemCount: schedules.length,
-                        //         itemBuilder: (_, idx) => ListTile(
-                        //           title: Text(schedules.elementAt(idx).driverId),
-                        //           subtitle:
-                        //               Text(schedules.elementAt(idx).managerId),
-                        //         ),
-                        //       );
-                        //     }
-
-                        //     return const CircularProgressIndicator();
-                        //   },
-                        // ),
                       ),
                     ],
                   )),

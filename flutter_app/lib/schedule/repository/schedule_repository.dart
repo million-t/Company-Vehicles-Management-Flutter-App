@@ -1,8 +1,10 @@
 import '../data_providers/schedule_data_provider.dart';
 import '../models/schedule_model.dart';
+import '../../util/local_provider.dart';
 
 class ScheduleRepository {
   final ScheduleDataProvider dataProvider = ScheduleDataProvider();
+  LocalDb localDb = LocalDb();
   ScheduleRepository();
 
   Future<Schedule> create(Schedule schedule, String token) async {
@@ -14,11 +16,27 @@ class ScheduleRepository {
   }
 
   Future<List<Schedule>> getAllToManager(String token) async {
-    return dataProvider.getAllToManager(token);
+    try {
+      final remote = await dataProvider.getAllToManager(token);
+      await localDb
+          .saveSchedules(remote.map((schedule) => schedule.toJson()).toList());
+      return remote;
+    } catch (_) {
+      final localData = await localDb.getSchedules();
+      return localData;
+    }
   }
 
   Future<List<Schedule>> getAllByDriver(String token) async {
-    return dataProvider.getAllByDriver(token);
+    try {
+      final remote = await dataProvider.getAllByDriver(token);
+      await localDb
+          .saveSchedules(remote.map((schedule) => schedule.toJson()).toList());
+      return remote;
+    } catch (_) {
+      final localData = await localDb.getSchedules();
+      return localData;
+    }
   }
 
   Future<void> delete(String id, String token) async {

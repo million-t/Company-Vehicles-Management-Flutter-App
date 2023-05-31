@@ -30,4 +30,17 @@ class Report {
       litres: json['litres'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    json["_id"] = id;
+    json["driver_name"] = driverName;
+    json["vehicle_name"] = vehicleName;
+    json["litres"] = litres;
+    json["distance"] = distance;
+    json["price"] = price;
+    json["driver_id"] = driverId;
+    json["manager_id"] = managerId;
+    return json;
+  }
 }

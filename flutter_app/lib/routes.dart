@@ -126,22 +126,22 @@ final goRouter = GoRouter(
 const tabs = [
   ScaffoldWithNavBarTabItem(
     initialLocation: '/schedule',
-    icon: Icon(Icons.home),
+    icon: Icon(Icons.calendar_month_outlined),
     label: 'Schedule',
   ),
   ScaffoldWithNavBarTabItem(
     initialLocation: '/report',
-    icon: Icon(Icons.settings),
+    icon: Icon(Icons.note_add_outlined),
     label: 'Report',
   ),
   ScaffoldWithNavBarTabItem(
     initialLocation: '/issues',
-    icon: Icon(Icons.settings),
+    icon: Icon(Icons.help_center_outlined),
     label: 'issues',
   ),
   ScaffoldWithNavBarTabItem(
     initialLocation: '/settings',
-    icon: Icon(Icons.settings),
+    icon: Icon(Icons.person_outline_outlined),
     label: 'Settings',
   )
 ];
@@ -176,7 +176,8 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
       backgroundColor: Color(0xff222831),
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.black,
+        unselectedItemColor: Color.fromRGBO(66, 108, 134, 1),
+        selectedItemColor: Color(0xFF5BC0FF),
         backgroundColor: Color(0xff222831),
         currentIndex: _currentIndex,
         items: tabs,
@@ -198,9 +199,8 @@ class ScaffoldWithNavBarTabItem extends BottomNavigationBarItem {
       {required this.initialLocation,
       required Widget icon,
       String? label,
-      Color color = const Color.fromARGB(255, 65, 76, 92)})
+      Color color = const Color(0xff393E46)})
       : super(icon: icon, label: label, backgroundColor: color);
 
-  /// The initial location/path
   final String initialLocation;
 }

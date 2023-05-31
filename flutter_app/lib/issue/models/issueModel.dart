@@ -28,4 +28,16 @@ class Issue {
       status: json['status'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    json["_id"] = id;
+    json["driver_id"] = driverId;
+    json["driver_name"] = driverName;
+    json["manager_id"] = managerId;
+    json["response"] = response;
+    json["content"] = content;
+    json["status"] = status;
+    return json;
+  }
 }

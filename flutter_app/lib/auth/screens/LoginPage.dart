@@ -142,6 +142,7 @@ class _LoginPageState extends State<LoginPage> {
 
                       userRepository.getToken().then((value) {
                         value = value.toString();
+                        print(value);
                         if (value == 'null') {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(_isLogin

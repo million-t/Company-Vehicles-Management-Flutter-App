@@ -20,4 +20,13 @@ class Vehicle {
         licensePlateNumber: json['license_plate_number'],
         image: json['image']);
   }
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    json["_id"] = id;
+    json["image"] = image;
+    json["license_plate_number"] = licensePlateNumber;
+    json["name"] = name;
+    json["manager_id"] = managerId;
+    return json;
+  }
 }

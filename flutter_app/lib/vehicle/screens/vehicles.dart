@@ -30,7 +30,7 @@ class _VehicleScreenState extends State<VehicleScreen> {
         child: Scaffold(
           backgroundColor: Color(0xff222831),
           appBar: AppBar(
-            title: Text("Reports"),
+            title: Text("Vehicles"),
             backgroundColor: const Color(0xff393E46),
           ),
           body: BlocBuilder<VehicleBloc, VehicleState>(

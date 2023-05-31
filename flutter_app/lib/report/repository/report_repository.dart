@@ -1,8 +1,10 @@
 import '../data_providers/report_data_provider.dart';
 import '../models/report_model.dart';
+import '../../util/local_provider.dart';
 
 class ReportRepository {
   final ReportDataProvider dataProvider = ReportDataProvider();
+  LocalDb localDb = LocalDb();
   ReportRepository();
 
   Future<Report> create(Report report, String token) async {
@@ -14,11 +16,27 @@ class ReportRepository {
   }
 
   Future<List<Report>> getAllToManager(String token) async {
-    return dataProvider.getAllToManager(token);
+    try {
+      final remote = await dataProvider.getAllToManager(token);
+      await localDb
+          .saveReports(remote.map((report) => report.toJson()).toList());
+      return remote;
+    } catch (_) {
+      final localData = await localDb.getReports();
+      return localData;
+    }
   }
 
   Future<List<Report>> getAllByDriver(String token) async {
-    return dataProvider.getAllByDriver(token);
+    try {
+      final remote = await dataProvider.getAllByDriver(token);
+      await localDb
+          .saveReports(remote.map((report) => report.toJson()).toList());
+      return remote;
+    } catch (_) {
+      final localData = await localDb.getReports();
+      return localData;
+    }
   }
 
   Future<void> delete(String id, String token) async {

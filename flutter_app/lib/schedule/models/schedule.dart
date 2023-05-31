@@ -32,4 +32,17 @@ class Schedule {
         start: json['start'],
         end: json['end']);
   }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    json["_id"] = id;
+    json["vehicle_id"] = vehicleId;
+    json["license_plate_number"] = licensePlateNumber;
+    json["image"] = image;
+    json["start"] = start;
+    json["end"] = end;
+    json["driver_id"] = driverId;
+    json["manager_id"] = managerId;
+    return json;
+  }
 }
