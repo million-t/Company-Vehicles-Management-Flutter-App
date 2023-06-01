@@ -48,125 +48,143 @@ class _LoginPageState extends State<LoginPage> {
           );
         },
         child: Scaffold(
-          // appBar: AppBar(
-          //   // title: Text('Welcome'),
-          //   backgroundColor: Color.fromARGB(255, 223, 25, 25),
-          // ),
-          body: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 50.0),
-                  Visibility(
-                      visible: !_isLogin,
-                      child: TextField(
-                        controller: _nameController,
-                        decoration: InputDecoration(
-                          labelText: 'Name',
-                        ),
-                      )),
-                  SizedBox(height: 16.0),
-                  TextField(
-                      controller: _emailController,
-                      decoration: const InputDecoration(
-                        labelText: 'Email',
-                      )),
-                  SizedBox(height: 16.0),
-                  TextField(
-                    controller: _passwordController,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                    ),
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 16.0),
-                  Visibility(
-                      visible: (!_isLogin) && _userType == "driver",
-                      child: TextField(
-                        controller: _managerIdController,
+            // appBar: AppBar(
+            //   // title: Text('Welcome'),
+            //   backgroundColor: Color.fromARGB(255, 223, 25, 25),
+            // ),
+            body: BlocConsumer<UserBloc, UserState>(
+          builder: (BuildContext context, state) {
+            return Padding(
+              padding: EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 50.0),
+                    Visibility(
+                        visible: !_isLogin,
+                        child: TextField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                            labelText: 'Name',
+                          ),
+                        )),
+                    SizedBox(height: 16.0),
+                    TextField(
+                        controller: _emailController,
                         decoration: const InputDecoration(
-                          labelText: 'Manager ID',
-                        ),
-                      )),
-                  SizedBox(height: 16.0),
-                  Visibility(
-                      visible: !_isLogin,
-                      child: DropdownButton(
-                        items: userTypes.map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _userType = value.toString();
-                          });
+                          labelText: 'Email',
+                        )),
+                    SizedBox(height: 16.0),
+                    TextField(
+                      controller: _passwordController,
+                      decoration: const InputDecoration(
+                        labelText: 'Password',
+                      ),
+                      obscureText: true,
+                    ),
+                    SizedBox(height: 16.0),
+                    Visibility(
+                        visible: (!_isLogin) && _userType == "driver",
+                        child: TextField(
+                          controller: _managerIdController,
+                          decoration: const InputDecoration(
+                            labelText: 'Manager ID',
+                          ),
+                        )),
+                    SizedBox(height: 16.0),
+                    Visibility(
+                        visible: !_isLogin,
+                        child: DropdownButton(
+                          items: userTypes.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _userType = value.toString();
+                            });
+                          },
+                          value: _userType,
+                        )),
+                    SizedBox(height: 24.0),
+                    ElevatedButton(
+                        onPressed: () {
+                          User user;
+                          String password;
+                          String email;
+
+                          UserEvent event;
+                          if (!_isLogin) {
+                            email = _emailController.text;
+                            password = _passwordController.text;
+                            String name = _nameController.text;
+
+                            String type = _userType;
+                            String managerId = _managerIdController.text;
+
+                            user = User(
+                                name: name,
+                                email: email,
+                                password: password,
+                                type: type,
+                                managerId: managerId);
+
+                            event = UserSignup(user);
+                          } else {
+                            email = _emailController.text;
+                            password = _passwordController.text;
+
+                            event = UserLogin(email, password);
+                          }
+
+                          BlocProvider.of<UserBloc>(context).add(event);
+
+                          // userRepository.getToken().then((value) {
+                          //   value = value.toString();
+                          //   print(value);
+                          //   if (value == 'null') {
+                          //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          //         content: Text(_isLogin
+                          //             ? "Login Failed."
+                          //             : "Signup Failed.")));
+                          //   } else {
+                          //     context.go('/schedule');
+                          //   }
+                          // }
+                          //   )
                         },
-                        value: _userType,
-                      )),
-                  SizedBox(height: 24.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      User user;
-                      String password;
-                      String email;
-
-                      UserEvent event;
-                      if (!_isLogin) {
-                        email = _emailController.text;
-                        password = _passwordController.text;
-                        String name = _nameController.text;
-
-                        String type = _userType;
-                        String managerId = _managerIdController.text;
-
-                        user = User(
-                            name: name,
-                            email: email,
-                            password: password,
-                            type: type,
-                            managerId: managerId);
-
-                        event = UserSignup(user);
-                      } else {
-                        email = _emailController.text;
-                        password = _passwordController.text;
-
-                        event = UserLogin(email, password);
-                      }
-
-                      BlocProvider.of<UserBloc>(context).add(event);
-
-                      userRepository.getToken().then((value) {
-                        value = value.toString();
-                        print(value);
-                        if (value == 'null') {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(_isLogin
-                                  ? "Login Failed."
-                                  : "Signup Failed.")));
-                        } else {
-                          context.go('/schedule');
-                        }
-                      });
-                    },
-                    child: Text(buttonText),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _isLogin = !_isLogin;
-                      });
-                    },
-                    child: Text(buttonText2),
-                  ),
-                ],
+                        child: Text(buttonText)),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _isLogin = !_isLogin;
+                        });
+                      },
+                      child: Text(buttonText2),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
-        ));
+            );
+          },
+          listener: (context, state) {
+            if (state is UserLogedin) {
+              print('loged in yet');
+              context.go('/schedule');
+            } else if (state is UserOperationFailure) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content:
+                      Text(_isLogin ? "Login Failed." : "Signup Failed.")));
+            } else if (state is UserLoading) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(_isLogin ? "Loging in." : "Signing up.")));
+            } else {
+              print("what is going on");
+            }
+          },
+        )));
   }
 }

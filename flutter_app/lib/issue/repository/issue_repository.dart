@@ -19,20 +19,22 @@ class IssueRepository {
   Future<List<Issue>> getAllToManager(String token) async {
     try {
       final remote = await dataProvider.getAllToManager(token);
-      await localDb.saveIssues(remote.map((issue) => issue.toJson()).toList());
+      // await localDb.saveIssues(remote.map((issue) => issue.toJson()).toList());
       return remote;
     } catch (_) {
-      final localData = await localDb.getIssues();
-      return localData;
+      return [];
+      // final localData = await localDb.getIssues();
+      // return localData;
     }
   }
 
   Future<List<Issue>> getAllByDriver(String token) async {
     try {
       final remote = await dataProvider.getAllByDriver(token);
-      await localDb.saveIssues(remote.map((issue) => issue.toJson()).toList());
+      // await localDb.saveIssues(remote.map((issue) => issue.toJson()).toList());
       return remote;
     } catch (_) {
+      return [];
       final localData = await localDb.getIssues();
       return localData;
     }

@@ -19,12 +19,13 @@ class VehicleRepository {
   Future<List<Vehicle>> getAllByManager(String token) async {
     try {
       final remote = await dataProvider.getAllByManager(token);
-      await localDb
-          .saveVehicles(remote.map((vehicle) => vehicle.toJson()).toList());
+      // await localDb
+      //     .saveVehicles(remote.map((vehicle) => vehicle.toJson()).toList());
       return remote;
     } catch (_) {
-      final localData = await localDb.getVehicles();
-      return localData;
+      return [];
+      // final localData = await localDb.getVehicles();
+      // return localData;
     }
   }
 

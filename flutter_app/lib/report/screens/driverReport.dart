@@ -6,6 +6,8 @@ import '../blocs/blocs.dart';
 import '../repository/report_repository.dart';
 import 'package:go_router/go_router.dart';
 import 'deleteReportDialog.dart';
+import '../../auth/repository/user_repository.dart';
+import 'dart:convert';
 
 class ReportScreen extends StatefulWidget {
   @override
@@ -13,8 +15,23 @@ class ReportScreen extends StatefulWidget {
 }
 
 class _ReportScreenState extends State<ReportScreen> {
+  String? userType;
+  final userRepo = UserRepository();
+
+  void getUserType() async {
+    String? user = await userRepo.getUser();
+    if (user != null) {
+      final userJson = jsonDecode(user);
+      setState(() {
+        userType = userJson['type'];
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    getUserType();
+
     ReportDialog dialog = ReportDialog();
     ReportDeleteDialog deleteDialog = ReportDeleteDialog();
     ReportRepository reportRepository = ReportRepository();
@@ -25,36 +42,29 @@ class _ReportScreenState extends State<ReportScreen> {
           );
         },
         child: Scaffold(
-          backgroundColor: Color(0xff222831),
-          appBar: AppBar(
-            title: Text("Reports"),
-            backgroundColor: const Color(0xff393E46),
-          ),
-          body: BlocBuilder<ReportBloc, ReportState>(
-            builder: (_, state) {
-              BlocProvider.of<ReportBloc>(_).add(ReportLoad());
-              if (state is ReportOperationFailure) {
-                return const Text('Could not Fetch!');
-              }
+            backgroundColor: Color(0xff222831),
+            appBar: AppBar(
+              title: const Text("Reports"),
+              backgroundColor: const Color(0xff393E46),
+            ),
+            body: BlocBuilder<ReportBloc, ReportState>(
+              buildWhen: (previousState, currentState) {
+                return previousState is ReportLoading &&
+                    currentState is! ReportLoading;
+              },
+              builder: (_, state) {
+                BlocProvider.of<ReportBloc>(_).add(ReportLoad());
+                if (state is ReportOperationFailure) {
+                  return const Text('Could not Fetch!');
+                }
 
-              if (state is ReportOperationSuccess) {
-                final reports = state.reports.toList();
+                if (state is ReportOperationSuccess) {
+                  final reports = state.reports.toList();
 
-                return ListView.builder(
-                    itemCount: (reports != null) ? reports.length : 0,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Dismissible(
-                        key: Key(reports[index].id),
-                        onDismissed: (direction) {
-                          String strName = reports[index].vehicleName;
-                          // helper!.deleteItem(items![index]);
-                          setState(() {
-                            // items!.removeAt(index);
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("$strName deleted")));
-                        },
-                        child: Padding(
+                  return ListView.builder(
+                      itemCount: (reports != null) ? reports.length : 0,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
                             padding: EdgeInsets.fromLTRB(9.0, 5.6, 9.0, 1.4),
                             child: Container(
                               padding: EdgeInsets.fromLTRB(4.0, 2.6, 4.0, 1.4),
@@ -68,22 +78,101 @@ class _ReportScreenState extends State<ReportScreen> {
                               child: ListTile(
                                   contentPadding:
                                       EdgeInsets.symmetric(vertical: 16.0),
-                                  title: Text(
-                                    reports[index].vehicleName,
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 255, 255,
-                                          255), // set the font color
-                                      fontSize: 14.0, // set the font size
-                                      // fontWeight:
-                                      //     FontWeight.bold, // set the font weight
-                                    ),
-                                  ),
-                                  subtitle: Text(
-                                      '\n\nVolume: ${reports[index].litres} \nLitres: ${reports[index].litres} \nDistance: ${reports[index].distance}',
-                                      style: const TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255),
+                                  title: Container(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0.0, 0.0, 0.0, 8.0),
+                                      child: Text(
+                                        reports[index].vehicleName,
+                                        style: const TextStyle(
+                                          color: Color.fromARGB(255, 255, 255,
+                                              255), // set the font color
+                                          fontSize: 14.0, // set the font size
+                                          // fontWeight:
+                                          //     FontWeight.bold, // set the font weight
+                                        ),
                                       )),
+                                  subtitle: Row(children: [
+                                    Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Visibility(
+                                              visible: userType == 'manager',
+                                              child: const Text('Driver Name',
+                                                  style: TextStyle(
+                                                    fontSize: 12.0,
+                                                    color: Color.fromRGBO(
+                                                        66, 108, 134, 1),
+                                                  ))),
+                                          const SizedBox(
+                                            height: 7.0,
+                                          ),
+                                          const Text('Price',
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Color.fromRGBO(
+                                                    66, 108, 134, 1),
+                                              )),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          const Text('Distance',
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Color.fromRGBO(
+                                                    66, 108, 134, 1),
+                                              )),
+                                          const SizedBox(
+                                            height: 8.0,
+                                          ),
+                                          const Text('Litres',
+                                              style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Color.fromRGBO(
+                                                    66, 108, 134, 1),
+                                              ))
+                                        ]),
+                                    const SizedBox(
+                                      width: 10.0,
+                                    ),
+                                    Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Visibility(
+                                              visible: userType == 'manager',
+                                              child: Text(
+                                                  reports[index].driverName,
+                                                  style: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                  ))),
+                                          const SizedBox(
+                                            height: 7.0,
+                                          ),
+                                          Text("\$ ${reports[index].price}",
+                                              style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255),
+                                              )),
+                                          const SizedBox(
+                                            height: 7.0,
+                                          ),
+                                          Text("${reports[index].distance} km",
+                                              style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255),
+                                              )),
+                                          const SizedBox(
+                                            height: 7.0,
+                                          ),
+                                          Text(reports[index].litres,
+                                              style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 255, 255, 255),
+                                              ))
+                                        ])
+                                  ]),
                                   onTap: () {},
                                   trailing: PopupMenuButton(
                                     color: Colors.white,
@@ -109,31 +198,32 @@ class _ReportScreenState extends State<ReportScreen> {
                                       }
                                     },
                                     itemBuilder: (context) => [
-                                      PopupMenuItem(
+                                      const PopupMenuItem(
                                         value: 'update',
                                         child: Text('Edit'),
                                       ),
-                                      PopupMenuItem(
+                                      const PopupMenuItem(
                                         value: 'delete',
                                         child: Text('Delete'),
                                       ),
                                     ],
                                   )),
-                            )),
-                      );
-                    });
-              }
+                            ));
+                      });
+                }
 
-              return Center(child: const CircularProgressIndicator());
-            },
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              context.go('/report/details');
-            },
-            child: Icon(Icons.add, color: Color(0xff222831)),
-            backgroundColor: Color.fromARGB(255, 255, 211, 109),
-          ),
-        ));
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
+            floatingActionButton: Visibility(
+              visible: userType == 'driver',
+              child: FloatingActionButton(
+                onPressed: () {
+                  context.go('/report/details');
+                },
+                backgroundColor: const Color.fromARGB(255, 255, 211, 109),
+                child: const Icon(Icons.add, color: Color(0xff222831)),
+              ),
+            )));
   }
 }

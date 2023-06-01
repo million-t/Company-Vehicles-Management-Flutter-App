@@ -29,7 +29,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     });
     on<UserLogin>((event, emit) async {
       try {
+        print('bloc 1');
         User user = await userRepository.login(event.email, event.password);
+        print('bloc 2');
         emit(UserLogedin(user));
       } catch (error) {
         emit(UserOperationFailure(error));

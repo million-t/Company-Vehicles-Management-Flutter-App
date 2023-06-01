@@ -53,6 +53,7 @@ class IssueDataProvider {
     final response = await http.get(Uri.parse("$_baseUrl/manager"),
         headers: <String, String>{"Authorization": token});
     if (response.statusCode == 200) {
+      print('check check');
       final issues = jsonDecode(response.body) as List;
       return issues.map((c) => Issue.fromJson(c)).toList();
     } else {

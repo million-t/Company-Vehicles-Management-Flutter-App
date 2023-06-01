@@ -55,6 +55,7 @@ class ReportDataProvider {
   Future<List<Report>> getAllToManager(String token) async {
     final response = await http.get(Uri.parse("$_baseUrl/manager"),
         headers: <String, String>{"Authorization": token});
+
     if (response.statusCode == 200) {
       final reports = jsonDecode(response.body) as List;
       return reports.map((c) => Report.fromJson(c)).toList();

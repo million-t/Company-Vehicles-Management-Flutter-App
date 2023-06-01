@@ -13,12 +13,12 @@ class WelcomePage extends StatelessWidget {
         context.go('/login');
       }
     });
-    return Scaffold(
-      backgroundColor: Colors.white,
+    return const Scaffold(
+      backgroundColor: Color(0xff222831),
       body: SafeArea(
         child: Center(
           child: Text(
-            'Welcome!',
+            'VeValet',
             style: TextStyle(
               fontSize: 32.0,
               fontWeight: FontWeight.bold,

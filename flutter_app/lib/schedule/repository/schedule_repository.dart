@@ -18,24 +18,26 @@ class ScheduleRepository {
   Future<List<Schedule>> getAllToManager(String token) async {
     try {
       final remote = await dataProvider.getAllToManager(token);
-      await localDb
-          .saveSchedules(remote.map((schedule) => schedule.toJson()).toList());
+      // await localDb
+      //     .saveSchedules(remote.map((schedule) => schedule.toJson()).toList());
       return remote;
     } catch (_) {
-      final localData = await localDb.getSchedules();
-      return localData;
+      return [];
+      // final localData = await localDb.getSchedules();
+      // return localData;
     }
   }
 
   Future<List<Schedule>> getAllByDriver(String token) async {
     try {
       final remote = await dataProvider.getAllByDriver(token);
-      await localDb
-          .saveSchedules(remote.map((schedule) => schedule.toJson()).toList());
+      // await localDb
+      //     .saveSchedules(remote.map((schedule) => schedule.toJson()).toList());
       return remote;
     } catch (_) {
-      final localData = await localDb.getSchedules();
-      return localData;
+      return [];
+      // final localData = await localDb.getSchedules();
+      // return localData;
     }
   }
 

@@ -62,8 +62,7 @@ class ScheduleScreenState extends State<ScheduleScreen> {
                       itemCount: (schedules != null) ? schedules.length : 0,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(9.0, 10.0, 9.0, 5.4),
+                          padding: EdgeInsets.fromLTRB(9.0, 10.0, 9.0, 5.4),
                           child: Container(
                             // padding: EdgeInsets.fromLTRB(4.0, 2.6, 4.0, 1.4),
                             decoration: BoxDecoration(
@@ -83,7 +82,7 @@ class ScheduleScreenState extends State<ScheduleScreen> {
                                     //     width: 1, color: Colors.grey),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
-                                  constraints: const BoxConstraints(
+                                  constraints: BoxConstraints(
                                       maxWidth: 550.0, minHeight: 50.0),
                                   child: ClipRRect(
                                     // borderRadius: BorderRadius.circular(8),

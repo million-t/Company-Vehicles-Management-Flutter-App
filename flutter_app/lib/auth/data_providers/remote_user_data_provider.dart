@@ -22,13 +22,17 @@ class UserDataProvider {
           "email": email,
           "password": password,
         }));
+    print('login check 0');
 
     if (response.statusCode == 200) {
+      print('login check 1');
       final prefs = await SharedPreferences.getInstance();
+      print('login check 2');
 
       String token = jsonDecode(response.body)["token"];
-      prefs.setString('token', 'token $token');
-      prefs.setString('user', response.body);
+      await prefs.setString('token', 'token $token');
+      await prefs.setString('user', response.body);
+      print('login check 3');
 
       return User.fromJson(jsonDecode(response.body));
     }

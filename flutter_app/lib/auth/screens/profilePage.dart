@@ -11,6 +11,7 @@ import '../blocs/user_event.dart';
 import '../repository/user_repository.dart';
 import 'dart:convert';
 import '../data_providers/remote_user_data_provider.dart';
+import 'package:flutter/services.dart';
 
 class ProfilePage extends StatefulWidget {
   UserRepository userRepository = UserRepository();
@@ -23,25 +24,29 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   UserRepository userRepository;
   _ProfilePageState({required this.userRepository});
+  // TextEditingController _emailController = TextEditingController();
+  // TextEditingController _nameController = TextEditingController();
+  // TextEditingController _managerIdController = TextEditingController();
 
-  // String? userType;
+  String? userType;
+  String? userId;
 
-  // void getUserType() async {
-  //   String? user = await userRepository.getUser();
-  //   if (user != null) {
-  //     final userJson = jsonDecode(user);
-  //     setState(() {
-  //       userType = userJson['type'];
-  //       _emailController = userJson['email'];
-  //       _nameController = userJson['name'];
-  //       // _managerIdController = "userJson['manager_id']";
-  //     });
-  //   }
-  // }
+  void getUserType() async {
+    String? user = await userRepository.getUser();
+    if (user != null && user != "null") {
+      final userJson = jsonDecode(user);
+      setState(() {
+        userType = userJson['type'];
+        // _emailController = userJson['email'];
+        // _nameController = userJson['name'];
+        userId = userJson['_id'];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // getUserType();
+    getUserType();
     return BlocProvider(
         create: (context) {
           return UserBloc(
@@ -49,25 +54,45 @@ class _ProfilePageState extends State<ProfilePage> {
           );
         },
         child: Scaffold(
-          // appBar: AppBar(
-          //   // title: Text('Welcome'),
-          //   backgroundColor: Color.fromARGB(255, 223, 25, 25),
-          // ),
+          backgroundColor: Color(0xff222831),
+          appBar: AppBar(
+            title: const Text("Profile"),
+            backgroundColor: const Color(0xff393E46),
+          ),
           body: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: SingleChildScrollView(
-              child: Column(
+              child: Center(
+                  child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 50.0),
+                  const SizedBox(height: 50.0),
+                  Visibility(
+                      visible: userType == 'manager',
+                      child: TextButton(
+                        onPressed: () {},
+                        child: GestureDetector(
+                          child: Text("Manager Id:  ${userId ?? ''}"),
+                          onTap: () {
+                            Clipboard.setData(
+                                ClipboardData(text: userId ?? ''));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content:
+                                      Text('Manager Id copied to clipboard')),
+                            );
+                          },
+                        ),
+                      )),
+                  const SizedBox(height: 50.0),
                   // Visibility(
                   //     visible: true,
-                  //     child: TextField(
-                  //       controller: _nameController,
-                  //       decoration: InputDecoration(
-                  //         labelText: 'Name',
-                  //       ),
-                  //     )),
+                  // TextField(
+                  //   controller: _nameController,
+                  //   decoration: InputDecoration(
+                  //     labelText: 'Name',
+                  //   ),
+                  // ),
                   // SizedBox(height: 16.0),
                   // TextField(
                   //     controller: _emailController,
@@ -75,13 +100,17 @@ class _ProfilePageState extends State<ProfilePage> {
                   //       labelText: 'Email',
                   //     )),
                   // SizedBox(height: 16.0),
-                  // TextField(
-                  //   controller: _passwordController,
-                  //   decoration: const InputDecoration(
-                  //     labelText: 'Password',
+                  // Visibility(
+                  //   visible: userType == 'manager',
+                  //   child: TextField(
+                  //     enabled: false,
+                  //     controller: _managerIdController,
+                  //     decoration: const InputDecoration(
+                  //       labelText: 'manager_id',
+                  //     ),
+                  //     //   obscureText: true,
                   //   ),
-                  //   obscureText: true,
-                  // ),
+                  // )
                   // SizedBox(height: 16.0),
                   // Visibility(
                   //     visible: userType == "driver",
@@ -123,6 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   //   },
                   //   child: Text('Update'),
                   // ),
+                  // ,
                   TextButton(
                     onPressed: () async {
                       await userRepository.logout();
@@ -139,7 +169,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Text("Delete Account"),
                   ),
                 ],
-              ),
+              )),
             ),
           ),
         ));
