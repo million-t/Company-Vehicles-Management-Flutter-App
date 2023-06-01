@@ -35,7 +35,7 @@ class LocalDb {
   Future<void> saveSchedules(List<Map<String, dynamic>> jsonData) async {
     await openDb();
     await db!.transaction((txn) async {
-      await txn.delete('schedules');
+      // await txn.delete('schedules');
       // final batch = txn.batch();
       for (final json in jsonData) {
         Map<String, dynamic> map = {};
@@ -67,8 +67,8 @@ class LocalDb {
   Future<void> saveReports(List<Map<String, dynamic>> jsonData) async {
     await openDb();
     await db!.transaction((txn) async {
-      await txn.delete('reports');
-      final batch = txn.batch();
+      // await txn.delete('reports');
+      // final batch = txn.batch();
       for (final json in jsonData) {
         Map<String, dynamic> map = {};
         map['_id'] = json["_id"];
@@ -79,10 +79,10 @@ class LocalDb {
         map['price'] = json["price"];
         map['manager_id'] = json["manager_id"];
         map['litres'] = json["litres"];
-        batch.insert('reports', map,
+        txn.batch().insert('reports', map,
             conflictAlgorithm: ConflictAlgorithm.replace);
       }
-      await batch.commit();
+      await txn.batch().commit();
     });
   }
 
@@ -98,8 +98,8 @@ class LocalDb {
   Future<void> saveVehicles(List<Map<String, dynamic>> jsonData) async {
     await openDb();
     await db!.transaction((txn) async {
-      await txn.delete('vehicles');
-      final batch = txn.batch();
+      // await txn.delete('vehicles');
+      // final batch = txn.batch();
       for (final json in jsonData) {
         Map<String, dynamic> map = {};
         map['_id'] = json["_id"];
@@ -108,10 +108,10 @@ class LocalDb {
         map['image'] = json["image"];
         map['license_plate_number'] = json["license_plate_number"];
 
-        batch.insert('vehicles', map,
+        txn.batch().insert('vehicles', map,
             conflictAlgorithm: ConflictAlgorithm.replace);
       }
-      await batch.commit();
+      await txn.batch().commit();
     });
   }
 
@@ -127,8 +127,8 @@ class LocalDb {
   Future<void> saveIssues(List<Map<String, dynamic>> jsonData) async {
     await openDb();
     await db!.transaction((txn) async {
-      await txn.delete('issues');
-      final batch = txn.batch();
+      // await txn.delete('issues');
+      // final batch = txn.batch();
       for (final json in jsonData) {
         Map<String, dynamic> map = {};
         map['_id'] = json["_id"];
@@ -139,10 +139,10 @@ class LocalDb {
         map['status'] = json["status"];
         map['driver_name'] = json["driver_name"];
 
-        batch.insert('issues', map,
+        txn.batch().insert('issues', map,
             conflictAlgorithm: ConflictAlgorithm.replace);
       }
-      await batch.commit();
+      await txn.batch().commit();
     });
   }
 

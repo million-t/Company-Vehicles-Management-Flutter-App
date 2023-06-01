@@ -150,7 +150,7 @@ class _ManagerScheduleState extends State<ManagerSchedule> {
                       }),
                   SizedBox(height: 16.0),
                   TextFormField(
-                    initialValue: startDate.toString(),
+                    // initialValue: startDate.toString(),
                     decoration: InputDecoration(
                       labelText: 'Start Date',
                       border: OutlineInputBorder(),
@@ -171,7 +171,7 @@ class _ManagerScheduleState extends State<ManagerSchedule> {
                   ),
                   SizedBox(height: 16.0),
                   TextFormField(
-                      initialValue: endDate.toString(),
+                      // initialValue: endDate.toString(),
                       decoration: InputDecoration(
                         labelText: 'End Date',
                         border: OutlineInputBorder(),

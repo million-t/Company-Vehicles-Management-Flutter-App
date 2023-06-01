@@ -48,10 +48,10 @@ class _ReportScreenState extends State<ReportScreen> {
               backgroundColor: const Color(0xff393E46),
             ),
             body: BlocBuilder<ReportBloc, ReportState>(
-              buildWhen: (previousState, currentState) {
-                return previousState is ReportLoading &&
-                    currentState is! ReportLoading;
-              },
+              // buildWhen: (previousState, currentState) {
+              //   return previousState is ReportLoading &&
+              //       currentState is! ReportLoading;
+              // },
               builder: (_, state) {
                 BlocProvider.of<ReportBloc>(_).add(ReportLoad());
                 if (state is ReportOperationFailure) {

@@ -45,10 +45,10 @@ class ScheduleScreenState extends State<ScheduleScreen> {
               backgroundColor: const Color(0xff393E46),
             ),
             body: BlocBuilder<ScheduleBloc, ScheduleState>(
-              buildWhen: (previousState, currentState) {
-                return previousState is ScheduleLoading &&
-                    currentState is! ScheduleLoading;
-              },
+              // buildWhen: (previousState, currentState) {
+              //   return previousState is ScheduleLoading &&
+              //       currentState is! ScheduleLoading;
+              // },
               builder: (_, state) {
                 BlocProvider.of<ScheduleBloc>(_).add(ScheduleLoad());
                 if (state is ScheduleOperationFailure) {
@@ -75,24 +75,21 @@ class ScheduleScreenState extends State<ScheduleScreen> {
                             child: Column(children: [
                               Column(children: [
                                 Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 1.0,
-                                  decoration: BoxDecoration(
-                                    // border: Border.all(
-                                    //     width: 1, color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  constraints: BoxConstraints(
-                                      maxWidth: 550.0, minHeight: 50.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0),
+                                  width: MediaQuery.of(context).size.width,
+                                  constraints: const BoxConstraints(
+                                      maxWidth: 450.0, minHeight: 50.0),
                                   child: ClipRRect(
-                                    // borderRadius: BorderRadius.circular(8),
-                                    child: Image.memory(base64Decode(
-                                        schedules[index]
-                                            .image
-                                            .split(',')
-                                            .last)),
-                                  ),
-                                )
+                                      // borderRadius: BorderRadius.circular(8),
+                                      child: Container()
+                                      // Image.memory(base64Decode(
+                                      //     schedules[index]
+                                      //         .image
+                                      //         .split(',')
+                                      //         .last)),
+                                      ),
+                                ),
                               ]),
                               ListTile(
                                   contentPadding: const EdgeInsets.fromLTRB(

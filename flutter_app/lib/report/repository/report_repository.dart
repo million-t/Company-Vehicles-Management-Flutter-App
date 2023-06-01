@@ -18,26 +18,26 @@ class ReportRepository {
   Future<List<Report>> getAllToManager(String token) async {
     try {
       final remote = await dataProvider.getAllToManager(token);
-      // await localDb
-      //     .saveReports(remote.map((report) => report.toJson()).toList());
+      await localDb
+          .saveReports(remote.map((report) => report.toJson()).toList());
       return remote;
     } catch (_) {
-      return [];
-      // final localData = await localDb.getReports();
-      // return localData;
+      // return [];
+      final localData = await localDb.getReports();
+      return localData;
     }
   }
 
   Future<List<Report>> getAllByDriver(String token) async {
     try {
       final remote = await dataProvider.getAllByDriver(token);
-      // await localDb
-      //     .saveReports(remote.map((report) => report.toJson()).toList());
+      await localDb
+          .saveReports(remote.map((report) => report.toJson()).toList());
       return remote;
     } catch (_) {
-      return [];
-      // final localData = await localDb.getReports();
-      // return localData;
+      // return [];
+      final localData = await localDb.getReports();
+      return localData;
     }
   }
 

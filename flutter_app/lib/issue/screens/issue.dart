@@ -48,10 +48,10 @@ class _IssueScreenState extends State<IssueScreen> {
             backgroundColor: const Color(0xff393E46),
           ),
           body: BlocBuilder<IssueBloc, IssueState>(
-            buildWhen: (previousState, currentState) {
-              return previousState is IssueLoading &&
-                  currentState is! IssueLoading;
-            },
+            // buildWhen: (previousState, currentState) {
+            //   return previousState is IssueLoading &&
+            //       currentState is! IssueLoading;
+            // },
             builder: (_, state) {
               BlocProvider.of<IssueBloc>(_).add(IssueLoad());
               if (state is IssueOperationFailure) {
