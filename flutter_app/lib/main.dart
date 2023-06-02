@@ -8,7 +8,7 @@ import 'routes.dart';
 void main() {
   final UserRepository userRepository = UserRepository();
 
-  // Bloc.observer = AppBlocObserver();
+  Bloc.observer = AppBlocObserver();
   runApp(MyApp(userRepository: userRepository));
 }
 

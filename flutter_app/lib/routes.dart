@@ -1,5 +1,5 @@
 import './schedule/screens/schedules.dart';
-import './schedule/screens/driverSchedulePage.dart';
+import 'schedule/screens/schedule_create.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import './report/screens/driverReport.dart';
@@ -18,7 +18,6 @@ import './settings/driversPage.dart';
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
-// the one and only GoRouter instance
 final goRouter = GoRouter(
   initialLocation: '/',
   navigatorKey: _rootNavigatorKey,

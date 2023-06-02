@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../repository/user_repository.dart';
+import 'package:flutter_app/auth/repository/user_repository.dart';
 import 'package:go_router/go_router.dart';
 
 class WelcomePage extends StatelessWidget {

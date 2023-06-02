@@ -3,13 +3,13 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_app/auth/blocs/blocs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/userModel.dart';
+import 'package:flutter_app/auth/models/userModel.dart';
 // import '../../Route/appRoute.dart';
 // import '../../Route/appRouteConstants.dart';
-import '../blocs/user_bloc.dart';
-import '../blocs/user_event.dart';
-import '../repository/user_repository.dart';
-import '../data_providers/remote_user_data_provider.dart';
+// import '../blocs/user_bloc.dart';
+// import '../blocs/user_event.dart';
+import 'package:flutter_app/auth/repository/user_repository.dart';
+// import '../data_providers/remote_user_data_provider.dart';
 
 class LoginPage extends StatefulWidget {
   UserRepository userRepository;
