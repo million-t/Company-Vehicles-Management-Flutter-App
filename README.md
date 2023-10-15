@@ -1,15 +1,3 @@
-# Health-and-Fitness-App
-
-
-Description
-
-This app provides variety of recommendations to users related to a healthy diet and physical Fitness based on their goal.
-The app lets users choose a category (such as Weight Loss, Fitness, Cardiac Health) and display the relevant feature
-that describes the details about exercises and diet routines that match that specific category (the goal).
-Some users (authors) are entitled to managing the features (Exercises and Diet).
-
-
-
 # Company Vehicles Management Statistics App
 
 Description
